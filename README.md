@@ -29,5 +29,10 @@ pip3 install selenium
 
 pip3 install requests
 
-
 nmap的话我附带上来了，应该不用再装。
+
+<br>
+
+界面图：
+
+![](./image/show.png)

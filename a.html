@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Xiaopan233-scan</title>
+	<style type="text/css">
+		.line{
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: center;
+		}
+		div{
+			padding: 20px 30px;
+		}
+		#shadow1{
+			width:100%;
+			height:100%;
+			position:absolute;
+			left:0;
+			top:0;
+			z-index:998;
+			background-color:black;
+			opacity:0.6;
+			display: none;
+		}
+		#shadow2{
+			width:100%;
+			height:100%;
+			position:absolute;
+			left:0;
+			top:0;
+			z-index:999;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: center;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<div class="line">
+			<div class="basic">
+				<p>Port: 80</p>
+				<p>method: http</p>
+				<p>title: 阿萨德法师打发斯蒂芬1111</p>
+				<p>status_code: 200</p>
+			</div>
+
+			<dir class="header">
+				<p> asdfasdfdf: adsfafadsfafa123dsfafadsf12313123131af </p>
+				<p> asdfasdfdf: adsfafadsfaf </p>
+				<p> asdfasdfdf: adsfafad123sfafadsfaf </p>
+				<p> asdfasdfdf: adsfaadsfafadsfaff </p>
+				<p> asdfasdfdf: adsfaadsfaff </p>
+				<p> asdfasdfdf: adsfaasdf </p>
+			</dir>
+
+			<div class="img">
+				<img src="./img/pan_https_www.baiying.cn_443.png" width="300px" onclick="showPic(this)">
+			</div>
+		</div>
+	</div>
+	<div id="shadow1"></div>
+	<div id="shadow2" onclick="showShadow(this)"></div>
+
+</body>
+</html>
+
+<script>
+	function showPic(that){
+		content = document.getElementById('shadow2')
+		newImg = document.createElement("img")
+		newImg.src = that.src
+		newImg.style = "opacity:1;"
+		content.appendChild(newImg)
+		document.getElementById("shadow1").style.display = "block"
+		document.getElementById("shadow2").style.display = "block"
+		document.getElementById("shadow2").style = "display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: center;"
+	}
+
+	function showShadow(that){
+		document.getElementById("shadow1").style.display = "none"
+		document.getElementById("shadow2").style.display = "none"
+	}
+</script>

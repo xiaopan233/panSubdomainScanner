@@ -31,8 +31,10 @@ pip3 install requests
 
 nmap的话我附带上来了，应该不用再装。
 
+那个 chromedriver ，需要给个环境变量才能用
+
 <br>
 
-界面图：
+完成之后的HTML界面图：
 
 ![](./image/show.png)

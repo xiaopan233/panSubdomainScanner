@@ -6,7 +6,8 @@
 <br>
 使用方式：
 
-sudo python3 panSubdomainScanner.py xxx.csv &#91;port&#93;
+root权限运行：
+python3 panSubdomainScanner.py xxx.csv &#91;port&#93;
 
 
 其中。xxx.csv为oneforall收集得到的csv

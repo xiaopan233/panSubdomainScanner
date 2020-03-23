@@ -9,7 +9,7 @@ import math
 from selenium import webdriver
 import selenium
 
-#use: sudo python3 go.py xxx.csv 8080,8081
+#use: sudo python3 go.py xxx.csv xxx.html 8080,8081 50
 os.system("mkdir img")
 
 status = []

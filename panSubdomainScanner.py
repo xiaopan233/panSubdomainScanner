@@ -185,7 +185,7 @@ for row in f_csv:
 
 #default 20 thread
 try:
-	tNumber = sys.argv[3]
+	tNumber = int(sys.argv[3])
 except:
 	tNumber = 20
 

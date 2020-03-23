@@ -7,15 +7,15 @@
 使用方式：
 
 root权限运行：
-python3 panSubdomainScanner.py xxx.csv xxx.html &#91;port&#93; &#91;thread number&#93;
+python3 panSubdomainScanner.py xxx.csv xxx.html &#91;thread number&#93; &#91;port&#93; 
 
 其中。xxx.csv为oneforall收集得到的csv
 
 xxx.html为结果输出的html文件
 
-port可选。为要扫描的端口，脚本默认扫描了80和443，如果要新增端口的话就可以写上去（不需要再写80和443），多个端口用英文逗号分开。
-
 thread number可选，为线程数，默认20
+
+port可选。为要扫描的端口，脚本默认扫描了80和443，如果要新增端口的话就可以写上去（不需要再写80和443），多个端口用英文逗号分开
 
 <br>
 本脚本使用了：

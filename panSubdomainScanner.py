@@ -9,7 +9,7 @@ import math
 from selenium import webdriver
 import selenium
 
-#use: sudo python3 go.py xxx.csv xxx.html 8080,8081 50
+#use: sudo python3 go.py xxx.csv xxx.html 50 8080,8081
 os.system("mkdir img")
 
 status = []
@@ -19,7 +19,7 @@ def pan_scan_port(subdomain):
 	portOpen = []
 	#default to scan 80 and 443
 	try:
-		ports = "80,443," + sys.argv[3]
+		ports = "80,443," + sys.argv[4]
 	except:
 		ports = "80,443"
 	
@@ -185,7 +185,7 @@ for row in f_csv:
 
 #default 20 thread
 try:
-	tNumber = sys.argv[4]
+	tNumber = sys.argv[3]
 except:
 	tNumber = 20
 

@@ -7,7 +7,10 @@
 使用方式：
 
 root权限运行：
+
+```
 python3 panSubdomainScanner.py xxx.csv xxx.html &#91;thread number&#93; &#91;port&#93; 
+```
 
 其中。xxx.csv为oneforall收集得到的csv
 
@@ -27,6 +30,9 @@ requests验证http和https，以及抓取header
 selenium进行网页截图
 
 <br>
+
+需要先安装好Chrome浏览器
+
 需要安装的库：
 
 pip3 install selenium
@@ -35,7 +41,15 @@ pip3 install requests
 
 nmap的话我附带上来了，应该不用再装。
 
-那个 chromedriver ，需要给个环境变量才能用
+那个 chromedriver ，需要给个环境变量才能用。
+
+为了让chrome能够在root模式下运行，需要修改个配置：
+
+```
+vim /usr/bin/google-chrome
+将 exec -a "$0" "$HERE/chrome" "$@"  改为
+exec -a "$0" "$HERE/chrome" "$@" --user-data-dir --no-sandbox
+```
 
 <br>
 

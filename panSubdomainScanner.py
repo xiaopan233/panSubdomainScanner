@@ -5,19 +5,21 @@ import requests
 import threading
 import os
 import time
+import math
 from selenium import webdriver
 import selenium
 
 #use: sudo python3 go.py xxx.csv 8080,8081
 os.system("mkdir img")
 
+status = []
 
 #use nmap scan the hsot
 def pan_scan_port(subdomain):
 	portOpen = []
 	#default to scan 80 and 443
 	try:
-		ports = "80,443," + sys.argv[2]
+		ports = "80,443," + sys.argv[3]
 	except:
 		ports = "80,443"
 	
@@ -79,7 +81,7 @@ def pan_uri_response(subdomain,portList):
 
 	return {"code" : 1, 'responseDict' : responseDict}
 
-
+#get the web screen shot
 def pan_screen_shot(driver, subdomain, uri):
 	result = {"subdomain" : subdomain, "main" : []}
 	for port in uri['responseDict'].items():
@@ -119,13 +121,16 @@ def pan_screen_shot(driver, subdomain, uri):
 
 	return result
 
-def pan_write_html(result):
-	head = '<!DOCTYPE html><html><head><title>Xiaopan233-scan</title><style type="text/css">.line{width: 100%;display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: center;}div{padding: 20px 30px;}#shadow1{width:100%;height:100%;position:absolute;left:0;top:0;z-index:998;background-color:black;opacity:0.6;display: none;}#shadow2{width:100%;height:100%;position:absolute;left:0;top:0;z-index:999;display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: center;display: none;}</style></head><body><div>'
+#write in the html file
+def pan_write_html(result,i):
+	global status
 
 	content = ''
 
 	for res in result:
 		subdomain = res['subdomain']
+		content = content + '<div style="border: 1px solid black;margin: 30px;">'
+
 		for main in res['main']:
 			content = content + '<div class="line">'
 
@@ -148,11 +153,26 @@ def pan_write_html(result):
 
 			content = content + '</div>'
 
-	foot = '</div><div id="shadow1"></div><div id="shadow2" onclick="showShadow(this)"></div></body></html><script>function showPic(that){content = document.getElementById("shadow2")newImg = document.createElement("img")newImg.src = that.srcnewImg.style = "opacity:1;"content.appendChild(newImg)document.getElementById("shadow1").style.display = "block"document.getElementById("shadow2").style.display = "block"document.getElementById("shadow2").style = "display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: center;"}function showShadow(that){document.getElementById("shadow1").style.display = "none"document.getElementById("shadow2").style.display = "none"}</script>'
+		content = content + '</div>'
 
-	f = open("./xxx.html","w")
-	f.write(head + content + foot)
+	f = open("./" + str(i) + ".html","w")
+	f.write(content)
 	f.close()
+	status[i] = 1
+
+def to_go(subdomainsList,i):
+	result = []
+	driver = webdriver.Chrome()
+	driver.set_page_load_timeout(6)
+	for subdomain in subdomainsList:
+		portOpen = pan_scan_port(subdomain)
+		if portOpen['code'] == 1:
+			uri = pan_uri_response(portOpen['subdomain'], portOpen['portList'])
+			result.append(pan_screen_shot(driver, subdomain, uri))
+	pan_write_html(result,i)
+	driver.quit()
+
+
 
 subdomainsList = []
 f = open(sys.argv[1])
@@ -163,15 +183,47 @@ for row in f_csv:
 	else:
 		subdomainsList.append(row[5])
 
-result = []
-driver = webdriver.Chrome()
-driver.set_page_load_timeout(6)
-for subdomain in subdomainsList:
-	portOpen = pan_scan_port(subdomain)
-	if portOpen['code'] == 1:
-		uri = pan_uri_response(portOpen['subdomain'], portOpen['portList'])
-		result.append(pan_screen_shot(driver, subdomain, uri))
+#default 20 thread
+try:
+	tNumber = sys.argv[4]
+except:
+	tNumber = 20
 
-pan_write_html(result)
-driver.quit()
+
+if len(subdomainsList) < tNumber:
+	tNumber = len(subdomainsList)
+
+for i in range(tNumber):
+	status.append(0)
+	interval = math.ceil(len(subdomainsList) / tNumber)
+	if((i*interval) < len(subdomainsList)):
+		subsList = subdomainsList[(i*interval):(i+1)*interval]
+		threading.Thread(target=to_go,args=(subsList,i)).start()
+
+while True:
+	flag = 1
+	for s in status:
+		if s == 0:
+			flag = 0
+	if flag == 1:
+		head = '<!DOCTYPE html><html><head><title>Xiaopan233-scan</title><style type="text/css">.line{width: 100%;display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: center;}div{padding: 20px 30px;}#shadow1{width:100%;height:100%;position:fixed;left:0;top:0;z-index:998;background-color:black;opacity:0.6;display: none;}#shadow2{width:100%;height:100%;position:fixed;left:0;top:0;z-index:999;display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: center;display: none;}</style></head><body><div>'
+		f = open(sys.argv[2],"w")
+		f.write(head)
+		j = 0
+		while j<= i:
+			ff = open("./" + str(j) + ".html", "r")
+			content = ff.read()
+			f.write(content)
+			ff.close()
+			j = j + 1
+		foot = '</div><div id="shadow1"></div><div id="shadow2" onclick="showShadow(this)"></div></body></html><script>function showPic(that){var content = document.getElementById("shadow2");var newImg = document.createElement("img");newImg.src = that.src;newImg.id = "newImg";content.appendChild(newImg);document.getElementById("shadow1").style.display = "block";document.getElementById("shadow2").style.display = "block";document.getElementById("shadow2").style = "display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: center;";} function showShadow(that){var content = document.getElementById("shadow2");var newImg = document.getElementById("newImg");content.removeChild(newImg);document.getElementById("shadow1").style.display = "none";document.getElementById("shadow2").style.display = "none";}</script>'
+		f.write(foot)
+		f.close()
+		break
+	print("执行状态：")
+	print(status)
+	time.sleep(1)
+
+
+
 

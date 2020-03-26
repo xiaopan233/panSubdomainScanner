@@ -1,7 +1,7 @@
 # panSubdomainScanner
 子域名收集和整理脚本（python3）
 
-本脚本基于oneforall收集到的子域名的基础上，再次探测和扫描、网页截图，使用html的形式展示
+本脚本基于[oneforall](https://github.com/shmilylty/OneForAll)收集到的子域名的基础上，再次探测和扫描、网页截图，使用html的形式展示
 
 <br>
 使用方式：

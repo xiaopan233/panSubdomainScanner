@@ -12,7 +12,7 @@ root权限运行：
 python3 go.py xxx.csv xxx.html [reqThread] [shotThread] [ports]
 ```
 
-其中。xxx.csv为oneforall收集得到的csv
+其中。xxx.csv为[oneforall](https://github.com/shmilylty/OneForAll)收集得到的csv
 
 xxx.html为结果输出的html文件
 

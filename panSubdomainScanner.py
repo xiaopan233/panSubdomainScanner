@@ -194,13 +194,13 @@ def shot_to_go(subdomainsList,i):
 
 
 subdomainsList = []
-f = open(sys.argv[1])
+f = open(sys.argv[1],encoding="utf-8")
 f_csv = csv.reader(f)
 for row in f_csv:
-	if row[5] == "subdomain":
+	if row[7] == "subdomain":
 		continue
 	else:
-		subdomainsList.append(row[5])
+		subdomainsList.append(row[7])
 
 #default 200 and 30 thread
 try:

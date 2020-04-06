@@ -85,6 +85,9 @@ nmap的话我附带上来了，应该不用再装。
 
 那个 chromedriver ，需要给个环境变量才能用。
 
+如果报错说chromedriver的版本有问题，查看自己chrome的版本，然后去这里下对应版本的chromedriver：https://npm.taobao.org/mirrors/chromedriver/
+
+
 为了让chrome能够在root模式下运行，需要修改个配置：
 
 ```

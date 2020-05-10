@@ -93,7 +93,7 @@ nmap的话我附带上来了，应该不用再装。
 ```
 vim /usr/bin/google-chrome
 将 exec -a "$0" "$HERE/chrome" "$@"  改为
-exec -a "$0" "$HERE/chrome" "$@" --user-data-dir --no-sandbox
+exec -a "$0" "$HERE/chrome" "$@" --no-sandbox
 ```
 
 <br>
